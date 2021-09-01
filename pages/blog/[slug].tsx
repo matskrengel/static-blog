@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import PostBody from '../../lib/components/post-body'
+import PostBody from '../../lib/components/postBody'
 import { getAllBlogPosts, getBlogPostBySlug } from '../../lib/contentRepository'
-import Image from 'next/image'
 import Link from 'next/link'
-import styles from '../../styles/BasePage.module.css'
+import Container from '../../lib/components/container'
+import Grid from '../../lib/components/grid'
+import Title from '../../lib/components/title'
+import CoverImage from '../../lib/components/coverImage'
+import SectionSeparator from '../../lib/components/sectionSeparator'
 
 export default function Post({ post }: any) {
   const router = useRouter()
@@ -15,34 +18,56 @@ export default function Post({ post }: any) {
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>{post.title} | Picsum & Ipsum Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Image src={post.coverImage} width="300" height="300"></Image>
-        <h1 className={styles.title}>
-          {post.title}
-        </h1>
+      <Container>
+        <main>
+          <Grid>
+            <div>
+              <CoverImage alt={`${post.title} Cover Image`} src={post.coverImage} width="300" height="300"></CoverImage>
+            </div>
 
-        <Link href="/">
-          <a>Home</a>
-        </Link>
+            <div>
+              <Title>
+                {post.title}
+              </Title>
+            </div>
 
-        <Link href="/about">
-          <a>About</a>
-        </Link>
+            <div>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </div>
 
-        <Link href="/blog">
-          <a>Blog</a>
-        </Link>
+            <div>
+              <Link href="/about">
+                <a>About</a>
+              </Link>
+            </div>
 
-        <PostBody content={post.markdownHtml} />
+            <div>
+              <Link href="/blog">
+                <a>Blog</a>
+              </Link>
+            </div>
 
-      </main>
-    </div>
+            <SectionSeparator />
+
+            <div>
+              By {post.author}
+            </div>
+
+            <div>
+              <PostBody content={post.markdownHtml} />
+            </div>
+          </Grid>
+        </main>
+      </Container>
+    </>
   )
 }
 

@@ -1,37 +1,57 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { getAboutHomeContent } from '../../lib/contentRepository'
-import styles from '../../styles/BasePage.module.css'
-import PostBody from '../../lib/components/post-body'
-import Image from 'next/image'
+import PostBody from '../../lib/components/postBody'
 import Link from 'next/link'
+import Container from '../../lib/components/container'
+import Grid from '../../lib/components/grid'
+import Title from '../../lib/components/title'
+import CoverImage from '../../lib/components/coverImage'
+import SectionSeparator from '../../lib/components/sectionSeparator'
 
 const AboutHome: NextPage = ({ aboutContent }: any) => {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>{aboutContent.title} | Picsum & Ipsum Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Image src={aboutContent.coverImage} width="300" height="300"></Image>
-        <h1 className={styles.title}>
-          {aboutContent.title}
-        </h1>
+      <Container>
+        <main>
+          <Grid>
+            <div>
+              <CoverImage alt="About Cover Image" src={aboutContent.coverImage} width="300" height="300"></CoverImage>
+            </div>
 
-        <Link href="/">
-          <a>Home</a>
-        </Link>
+            <div>
+              <Title>
+                {aboutContent.title}
+              </Title>
+            </div>
 
-        <Link href="/blog">
-          <a>Blog</a>
-        </Link>
 
-        <PostBody content={aboutContent.markdownHtml} />
+            <div>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+            </div>
 
-      </main>
-    </div>
+            <div>
+              <Link href="/blog">
+                <a>Blog</a>
+              </Link>
+            </div>
+
+            <SectionSeparator />
+
+            <div>
+              <PostBody content={aboutContent.markdownHtml} />
+            </div>
+          </Grid>
+        </main>
+      </Container>
+    </>
   )
 }
 
