@@ -3,7 +3,7 @@ title: 'A New Chapter'
 excerpt: "Haven't been blogging for a while. Quick update."
 coverImage: 'https://i.picsum.photos/id/1072/300/300.jpg?hmac=-cQDWArvLRB9rrmMvGpluNzMjvb_IWYgby4f62IH5Xw'
 date: '2020-03-16T05:35:07.322Z'
-author: Tim Neutkens
+author: Lorem
 ---
 
 Let's try some markdown features here.
@@ -16,11 +16,9 @@ Ordered list
 1. Item
 2. Another Item
 
-Some weird line with **bold**, _italic_ and `monospaced` content.
+Some weird line with **bold**, _italic_ and `code` content.
 
 > A quote.
-
-`code`
 
 ```
 $ some
