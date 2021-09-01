@@ -7,14 +7,15 @@ import Header from '../../lib/components/header'
 import PostHeader from '../../lib/components/post-header'
 import Layout from '../../lib/components/layout'
 import PostTitle from '../../lib/components/post-title'
-import { getAllBlogPosts, getBlogPostBySlug, markdownToHtml } from '../../lib/contentRepository'
+import { getAllBlogPosts, getBlogPostBySlug } from '../../lib/contentRepository'
 
-export default function Post({ post, morePosts, preview }: any) {
-  console.log(post)
+export default function Post({ post, preview }: any) {
   const router = useRouter()
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -28,7 +29,6 @@ export default function Post({ post, morePosts, preview }: any) {
                 <title>
                   {post.title} | Next.js Blog Example with Markdown
                 </title>
-                <meta property="og:image" content={post.ogImage.url} />
               </Head>
               <PostHeader
                 title={post.title}
@@ -36,7 +36,7 @@ export default function Post({ post, morePosts, preview }: any) {
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              <PostBody content={post.markdownHtml} />
             </article>
           </>
         )}
@@ -46,29 +46,15 @@ export default function Post({ post, morePosts, preview }: any) {
 }
 
 export async function getStaticProps({ params }: any) {
-  const post = getBlogPostBySlug(params.slug, [
-    'title',
-    'date',
-    'slug',
-    'author',
-    'content',
-    'ogImage',
-    'coverImage',
-  ])
-  const content = await markdownToHtml(post.content || '')
+  const post = await getBlogPostBySlug(params.slug)
 
   return {
-    props: {
-      post: {
-        ...post,
-        content,
-      },
-    },
+    props: { post },
   }
 }
 
 export async function getStaticPaths() {
-  const posts = getAllBlogPosts(['slug'])
+  const posts = await getAllBlogPosts()
 
   return {
     paths: posts.map((post) => {

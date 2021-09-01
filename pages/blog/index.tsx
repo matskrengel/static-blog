@@ -6,16 +6,12 @@ import MoreStories from '../../lib/components/more-stories'
 import HeroPost from '../../lib/components/hero-post'
 import Intro from '../../lib/components/intro'
 import Layout from '../../lib/components/layout'
-import { getAllBlogPosts, getBlogHomeContent, markdownToHtml } from '../../lib/contentRepository'
+import { getAllBlogPosts, getBlogHomeContent } from '../../lib/contentRepository'
+import PostBody from '../../lib/components/post-body'
 
-// TODO: load content/blog index content
-
-const BlogHome: NextPage = ({ blogHomeContent, content, allPosts }: any) => {
+const BlogHome: NextPage = ({ blogHomeContent, allPosts }: any) => {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
-
-  console.log(heroPost)
-  console.log(morePosts)
 
   return (
     <>
@@ -26,6 +22,9 @@ const BlogHome: NextPage = ({ blogHomeContent, content, allPosts }: any) => {
         <Container>
           <Intro />
           <h1>{blogHomeContent.title}</h1>
+
+          <PostBody content={blogHomeContent.markdownHtml}></PostBody>
+
           {heroPost && (
             <HeroPost
               title={heroPost.title}
@@ -46,26 +45,10 @@ const BlogHome: NextPage = ({ blogHomeContent, content, allPosts }: any) => {
 export default BlogHome
 
 export async function getStaticProps() {
-  const blogHomeContent = getBlogHomeContent([
-    'title',
-    'date',
-    'author',
-    'coverImage',
-  ])
-
-  const content = await markdownToHtml(blogHomeContent.content || '')
-
-
-  const allPosts = getAllBlogPosts([
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-  ])
+  const blogHomeContent = await getBlogHomeContent()
+  const allPosts = await getAllBlogPosts()
 
   return {
-    props: { blogHomeContent, content, allPosts },
+    props: { blogHomeContent, allPosts },
   }
 }

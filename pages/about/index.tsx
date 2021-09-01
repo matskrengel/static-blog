@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { getAboutHomeContent, markdownToHtml } from '../../lib/contentRepository'
+import { getAboutHomeContent } from '../../lib/contentRepository'
 import styles from '../../styles/BasePage.module.css'
 import PostBody from '../../lib/components/post-body'
 
-const AboutHome: NextPage = ({ aboutContent, content }: any) => {
+const AboutHome: NextPage = ({ aboutContent }: any) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,10 +17,10 @@ const AboutHome: NextPage = ({ aboutContent, content }: any) => {
           {aboutContent.title}
         </h1>
 
-        Author: {aboutContent.author.name}
+        Author: {aboutContent.author}
         <br />
         Date: {aboutContent.date}
-        <PostBody content={content} />
+        <PostBody content={aboutContent.markdownHtml} />
       </main>
     </div>
   )
@@ -29,23 +29,11 @@ const AboutHome: NextPage = ({ aboutContent, content }: any) => {
 export default AboutHome
 
 export async function getStaticProps() {
-  const aboutContent = getAboutHomeContent([
-    'title',
-    'date',
-    'author',
-    'content',
-    'ogImage',
-    'coverImage',
-  ])
-
-  console.log(aboutContent)
-
-  const content = await markdownToHtml(aboutContent.content || '')
+  const aboutContent = await getAboutHomeContent()
 
   return {
     props: {
-      aboutContent,
-      content
+      aboutContent
     },
   }
 }

@@ -5,6 +5,7 @@ import remarkParse from 'remark-parse'
 import remarkHtml from 'remark-html'
 import matter from 'gray-matter'
 import { unified } from 'unified'
+import { ContentData } from './models/contentData'
 
 const blogDirectory = join(process.cwd(), 'content/blog')
 const blogPostsDirectory = join(process.cwd(), 'content/blog/posts')
@@ -15,60 +16,50 @@ export function getBlogSlugs() {
   return fs.readdirSync(blogPostsDirectory)
 }
 
-export function getBlogPostBySlug(slug, fields = []) {
+export function getBlogPostBySlug(slug: string) {
   const realSlug = slug.replace(/\.md$/, '')
 
-  return getContent(blogPostsDirectory, realSlug, fields)
+  return getContent(blogPostsDirectory, realSlug)
 }
 
-export function getAllBlogPosts(fields = []) {
+export function getAllBlogPosts() {
   const slugs = getBlogSlugs()
-  console.log('getAllPosts')
-  console.log(slugs)
-  const posts = slugs
-    .map((slug) => getBlogPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
-  return posts
+  const posts = slugs.map((slug) => getBlogPostBySlug(slug))
+
+  return Promise.all(posts)
 }
 
-export function getBlogHomeContent(fields = []) {
-  return getContent(blogDirectory, 'index', fields)
+export function getBlogHomeContent() {
+  return getContent(blogDirectory, 'index')
 }
 
-export function getAboutHomeContent(fields = []) {
-  return getContent(aboutDirectory, 'index', fields)
+export function getAboutHomeContent() {
+  return getContent(aboutDirectory, 'index')
 }
 
-export function getHomeContent(fields = []) {
-  return getContent(homeDirectory, 'index', fields)
+export function getHomeContent() {
+  return getContent(homeDirectory, 'index')
 }
 
-function getContent(directory: string, filename: string, fields = []) {
+async function getContent(directory: string, filename: string): Promise<ContentData> {
   const fullPath = join(directory, `${filename}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
-  const items = {}
+  let result: ContentData = {
+    title: data['title'],
+    slug: filename || null,
+    coverImage: data['coverImage'],
+    date: data['date'],
+    author: data['author'] || null,
+    markdownHtml: await markdownToHtml(content),
+    excerpt: data['excerpt'] || null
+  };
 
-  // Ensure only the minimal needed data is exposed
-  fields.forEach((field) => {
-    if (field === 'slug') {
-      items[field] = filename
-    }
-    if (field === 'content') {
-      items[field] = content
-    }
-
-    if (data[field]) {
-      items[field] = data[field]
-    }
-  })
-
-  return items
+  return result;
 }
 
-export async function markdownToHtml(markdown) {
+export async function markdownToHtml(markdown: string) {
   const result = await unified().use(remarkParse).use(remarkHtml).process(markdown)
   return result.toString()
 }
