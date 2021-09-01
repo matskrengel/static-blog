@@ -50,7 +50,6 @@ async function getContent(directory: string, filename: string): Promise<ContentD
     title: data['title'],
     slug: filename || null,
     coverImage: data['coverImage'],
-    date: data['date'],
     author: data['author'] || null,
     markdownHtml: await markdownToHtml(content),
     excerpt: data['excerpt'] || null
