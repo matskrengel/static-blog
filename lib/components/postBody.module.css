@@ -1,0 +1,43 @@
+.wrapper {
+  @apply max-w-2xl mx-auto
+}
+
+.markdown {
+  @apply text-lg leading-relaxed;
+}
+
+.markdown ul {
+  @apply list-disc list-inside;
+}
+
+.markdown ol {
+  @apply list-decimal list-inside;
+}
+
+.markdown p {
+  @apply mb-2;
+}
+
+.markdown blockquote {
+  @apply italic;
+}
+
+.markdown code {
+  @apply bg-gray-200;
+}
+
+.markdown h2 {
+  @apply text-3xl mt-12 mb-4 leading-snug;
+}
+
+.markdown h3 {
+  @apply text-2xl mt-8 mb-4 leading-snug;
+}
+
+.markdown a {
+  @apply text-blue-500 hover:text-blue-700
+}
+
+.markdown img {
+  @apply inline;
+}
