@@ -51,7 +51,7 @@ const BlogHome: NextPage = ({ blogHomeContent, allPosts }: any) => {
 
             <div>
               {allPosts.map((post: ContentData) => (
-                <PostListLine title={post.title} slug={post.slug} excerpt={post.excerpt} author={post.author} />
+                <PostListLine key={`${post.slug + post.title}`} title={post.title} slug={post.slug} excerpt={post.excerpt} author={post.author} />
               ))}
             </div>
           </Grid>
