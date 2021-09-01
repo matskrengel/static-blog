@@ -46,12 +46,6 @@ async function getContent(directory: string, filename: string): Promise<ContentD
   // const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter.read(fullPath)
 
-  console.log("data")
-  console.log(data)
-  console.log("content")
-  console.log(content)
-
-
   let result: ContentData = {
     title: data['title'],
     slug: filename || null,
