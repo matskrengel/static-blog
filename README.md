@@ -5,11 +5,10 @@ This is a simple static blog with support for markdown, tailwindcss using next.j
 # Content updates
 
 The content markdown files live in the `./content` directory. 
-
-`/` -> `content/index.md`
-`/about` -> `content/about/index.md`
-`/blog` -> `content/blog/index.md`
-`/blog/:SLUG` -> `content/blog/:SLUG.md`
+* `/` -> `content/index.md`
+* `/about` -> `content/about/index.md`
+* `/blog` -> `content/blog/index.md`
+* `/blog/:SLUG` -> `content/blog/:SLUG.md`
 
 ## Content Metadata
 Index content support the following metadata:
