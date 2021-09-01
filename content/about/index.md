@@ -1,11 +1,7 @@
 ---
-title: 'About from Markdown'
-coverImage: '/images/about/cover.jpg'
+title: 'About'
+coverImage: 'https://i.picsum.photos/id/1005/300/300.jpg?hmac=LG1U93uHOTAn65RV5_GWWSjBZvOAlYrcGROqSxLUsm8'
 date: '2020-03-16T05:35:07.322Z'
 ---
 
-About aabout abouyt about
-
-## About Header Markdown
-
-About text block, about text block, about text block.
+It's me!

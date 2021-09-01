@@ -1,15 +1,13 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
-import Container from '../../lib/components/container'
 import PostBody from '../../lib/components/post-body'
-import Header from '../../lib/components/header'
-import PostHeader from '../../lib/components/post-header'
-import Layout from '../../lib/components/layout'
-import PostTitle from '../../lib/components/post-title'
 import { getAllBlogPosts, getBlogPostBySlug } from '../../lib/contentRepository'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from '../../styles/BasePage.module.css'
 
-export default function Post({ post, preview }: any) {
+export default function Post({ post }: any) {
   const router = useRouter()
 
   if (!router.isFallback && !post?.slug) {
@@ -17,31 +15,34 @@ export default function Post({ post, preview }: any) {
   }
 
   return (
-    <Layout preview={preview}>
-      <Container>
-        <Header />
-        {router.isFallback ? (
-          <PostTitle>Loading…</PostTitle>
-        ) : (
-          <>
-            <article className="mb-32">
-              <Head>
-                <title>
-                  {post.title} | Next.js Blog Example with Markdown
-                </title>
-              </Head>
-              <PostHeader
-                title={post.title}
-                coverImage={post.coverImage}
-                date={post.date}
-                author={post.author}
-              />
-              <PostBody content={post.markdownHtml} />
-            </article>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <div className={styles.container}>
+      <Head>
+        <title>{post.title} | Picsum & Ipsum Blog</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main className={styles.main}>
+        <Image src={post.coverImage} width="300" height="300"></Image>
+        <h1 className={styles.title}>
+          {post.title}
+        </h1>
+
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+
+        <Link href="/about">
+          <a>About</a>
+        </Link>
+
+        <Link href="/blog">
+          <a>Blog</a>
+        </Link>
+
+        <PostBody content={post.markdownHtml} />
+
+      </main>
+    </div>
   )
 }
 
