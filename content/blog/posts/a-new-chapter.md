@@ -8,6 +8,25 @@ author: Tim Neutkens
 
 Let's try some markdown features here.
 
-*bold*
+Unordered list
+* an item
+* another item
 
-_italic_
+Ordered list
+1. Item
+2. Another Item
+
+Some weird line with **bold**, _italic_ and `monospaced` content.
+
+> A quote.
+
+`code`
+
+```
+$ some
+$ multiline | code
+```
+
+[A link to https://www.google.com](https://www.google.com)
+
+Some inline image of a lion![A Lion](https://i.picsum.photos/id/1074/64/64.jpg?hmac=UqHMCrrAb3VqYKlJwnFMf062oLbr2shx2avUP8kb6ps "Lion Image")
